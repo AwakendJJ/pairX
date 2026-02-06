@@ -20,4 +20,10 @@ dist
 *~
 
 # Misc
-.DS_Store
+.
+
+# Frontend (additional safety)
+frontend/node_modules
+frontend/.next
+frontend/.env.local
+frontend/.env*.local
