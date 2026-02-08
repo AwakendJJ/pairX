@@ -50,6 +50,10 @@ export function ActionPanel({ trade, tradeId, userRole, onSuccess }: ActionPanel
   const stateName = stateNames[Number(trade.state)] || 'UNKNOWN';
   const isSeller = address?.toLowerCase() === trade.seller.toLowerCase();
   const isBuyer = address?.toLowerCase() === trade.buyer.toLowerCase();
+  const isTradeOpen = Number(trade.state) === 0; // OPEN state
+  
+  // For OPEN trades, anyone who isn't the seller can accept (become the buyer)
+  const canAcceptTrade = isTradeOpen && !isSeller && address;
 
   // Handle success callbacks
   const handleSuccess = () => {
@@ -109,11 +113,11 @@ export function ActionPanel({ trade, tradeId, userRole, onSuccess }: ActionPanel
       {/* OPEN State - Buyer can accept, Seller can cancel */}
       {stateName === 'OPEN' && (
         <div className="space-y-3">
-          {isBuyer || userRole === 'Viewer' ? (
+          {canAcceptTrade ? (
             <>
               <button
                 onClick={() => acceptTrade.acceptTrade(Number(tradeId))}
-                disabled={acceptTrade.isLoading || userRole === 'Viewer'}
+                disabled={acceptTrade.isLoading}
                 className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed font-semibold transition-colors"
               >
                 {acceptTrade.isLoading ? '⏳ Accepting Trade...' : '✅ Accept Trade'}

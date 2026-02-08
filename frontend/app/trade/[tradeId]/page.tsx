@@ -102,7 +102,17 @@ export default function TradeRoomPage() {
   // Determine user role
   const isSeller = address?.toLowerCase() === trade.seller.toLowerCase();
   const isBuyer = address?.toLowerCase() === trade.buyer.toLowerCase();
-  const userRole = isSeller ? 'Seller' : isBuyer ? 'Buyer' : 'Viewer';
+  const isTradeOpen = Number(trade.state) === 0; // OPEN state
+  
+  // For OPEN trades, non-sellers are potential buyers (can accept)
+  // For other states, only actual participants have roles
+  const userRole = isSeller 
+    ? 'Seller' 
+    : isBuyer 
+    ? 'Buyer' 
+    : (isTradeOpen && !isSeller) 
+    ? 'Buyer' // Potential buyer in OPEN state
+    : 'Viewer';
 
   return (
     <main className="min-h-screen p-8 bg-gray-50 dark:bg-gray-900">
