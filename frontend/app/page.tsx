@@ -3,6 +3,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount, useChainId } from 'wagmi';
 import { ContractExample } from '@/components/ContractExample';
+import Link from 'next/link';
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -100,12 +101,12 @@ export default function Home() {
             Test Actions →
           </a>
           <span className="text-gray-400">|</span>
-          <a
+          <Link
             href="/trade/1"
             className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
           >
             View Trade #1 →
-          </a>
+          </Link>
           <span className="text-gray-400">|</span>
           <a
             href="https://testnet.arcscan.app/address/0xf4436E192e01ADBa7d42c3c761C0B765EC9366E7"
