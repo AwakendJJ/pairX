@@ -207,7 +207,7 @@ export function ActionPanel({ trade, tradeId, userRole, onSuccess }: ActionPanel
                 <ol className="text-xs text-yellow-700 dark:text-yellow-300 list-decimal list-inside space-y-1">
                   <li>Send payment using the specified method</li>
                   <li>Keep proof of payment</li>
-                  <li>Click "Mark as Paid" only after completing payment</li>
+                  <li>Click &quot;Mark as Paid&quot; only after completing payment</li>
                 </ol>
               </div>
 

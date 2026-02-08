@@ -168,7 +168,7 @@ export default function CreateTradePage() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-red-600 dark:text-red-400 mt-0.5">✗</span>
-              <span>Don't release funds without verifying payment first</span>
+              <span>Don&apos;t release funds without verifying payment first</span>
             </li>
           </ul>
         </div>

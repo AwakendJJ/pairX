@@ -4,6 +4,7 @@ import { useReadPairXEscrowGetReputation } from '@/lib/generated';
 import { useEnsName, useEnsAvatar } from 'wagmi';
 import { mainnet } from 'viem/chains';
 import { normalize } from 'viem/ens';
+import Image from 'next/image';
 
 interface ParticipantCardProps {
   role: 'seller' | 'buyer';
@@ -88,9 +89,11 @@ export function ParticipantCard({
         <div className="flex items-center gap-3 mb-2">
           {/* ENS Avatar or fallback */}
           {ensAvatar && !ensAvatarLoading ? (
-            <img 
+            <Image 
               src={ensAvatar} 
               alt={ensName || 'Avatar'} 
+              width={48}
+              height={48}
               className="w-12 h-12 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700"
             />
           ) : (

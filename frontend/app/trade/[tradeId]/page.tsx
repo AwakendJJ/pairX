@@ -81,7 +81,7 @@ export default function TradeRoomPage() {
               ❌ Trade not found
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Trade ID {params.tradeId} doesn't exist or couldn't be loaded
+              Trade ID {params.tradeId} doesn&apos;t exist or couldn&apos;t be loaded
             </p>
             <Link 
               href="/"

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { usePublicClient } from 'wagmi';
-import { pairXEscrowAbi } from '@/lib/generated';
 
 interface ActivityLogProps {
   tradeId: bigint;
@@ -50,17 +49,6 @@ export function ActivityLog({ tradeId }: ActivityLogProps) {
         const currentBlock = await publicClient.getBlockNumber();
         const fromBlock = currentBlock - 10000n; // Look back ~10k blocks
 
-        // Define event signatures we want to track
-        const eventNames = [
-          'TradeCreated',
-          'TradeAccepted',
-          'TradePaid',
-          'TradeReleased',
-          'TradeCancelled',
-          'DisputeTriggered',
-          'DisputeResolved',
-        ];
-
         const allEvents: TradeEvent[] = [];
 
         // Fetch logs for all event types
@@ -74,7 +62,6 @@ export function ActivityLog({ tradeId }: ActivityLogProps) {
         for (const log of logs) {
           try {
             const topics = log.topics;
-            const data = log.data;
 
             // Simple event parsing based on indexed tradeId (first topic after event signature)
             const eventTradeId = topics[1] ? BigInt(topics[1]) : 0n;
@@ -85,7 +72,7 @@ export function ActivityLog({ tradeId }: ActivityLogProps) {
             const block = await publicClient.getBlock({ blockNumber: log.blockNumber });
 
             // Determine event type from topics[0] (event signature)
-            let eventInfo = getEventInfo(topics[0]);
+            const eventInfo = getEventInfo(topics[0]);
 
             if (eventInfo) {
               allEvents.push({

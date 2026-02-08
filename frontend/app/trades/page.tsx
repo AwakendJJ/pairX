@@ -29,12 +29,12 @@ export default function TradesPage() {
     chainId: 5042002,
   });
 
-  // State for loaded trades
-  const [trades, setTrades] = useState<Array<{
-    id: bigint;
-    data: any;
-  }>>([]);
-  const [isLoadingTrades, setIsLoadingTrades] = useState(false);
+  // State for loaded trades (currently unused but kept for future implementation)
+  // const [trades, setTrades] = useState<Array<{
+  //   id: bigint;
+  //   data: TradeData;
+  // }>>([]);
+  // const [isLoadingTrades, setIsLoadingTrades] = useState(false);
 
   // Fetch all trades when nextTradeId is available
   useEffect(() => {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAccount, useBalance } from 'wagmi';
-import { parseEther, formatEther } from 'viem';
+import { formatEther } from 'viem';
 import { useCreateTrade } from '@/hooks/usePairXContract';
 import { useRouter } from 'next/navigation';
 import { useReadPairXEscrowNextTradeId } from '@/lib/generated';
