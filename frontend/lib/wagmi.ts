@@ -1,5 +1,5 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { Chain } from 'viem/chains';
+import { Chain, mainnet } from 'viem/chains';
 
 /**
  * Arc L1 Testnet Chain Configuration
@@ -71,12 +71,15 @@ export const arcL1Mainnet = {
  * 
  * Configured for Arc L1 Testnet with:
  * - RainbowKit wallet connection
- * - Arc L1 custom chain
- * - Mainnet for ENS resolution (Phase 4)
+ * - Arc L1 custom chain (primary)
+ * - Ethereum Mainnet for ENS resolution (Phase 4)
+ * 
+ * Note: Mainnet is included to enable ENS name and avatar lookups
+ * without requiring users to connect to Ethereum mainnet.
  */
 export const config = getDefaultConfig({
   appName: 'PairX - P2P DEX on Arc L1',
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
-  chains: [arcL1Testnet],
+  chains: [arcL1Testnet, mainnet], // Mainnet added for ENS resolution
   ssr: true, // Enable server-side rendering for Next.js
 });

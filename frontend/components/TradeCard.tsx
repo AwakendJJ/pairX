@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { formatEther } from 'viem';
 import { useReadPairXEscrowGetReputation } from '@/lib/generated';
+import { useEnsName } from 'wagmi';
+import { mainnet } from 'viem/chains';
 
 interface TradeCardProps {
   tradeId: bigint;
@@ -97,6 +99,24 @@ export function TradeCard({ tradeId, trade, currentUserAddress }: TradeCardProps
     args: [trade.seller as `0x${string}`],
   });
 
+  // Fetch ENS names for seller and buyer (Phase 4 enhancement)
+  const { data: sellerEnsName } = useEnsName({
+    address: trade.seller as `0x${string}`,
+    chainId: mainnet.id,
+  });
+
+  const { data: buyerEnsName } = useEnsName({
+    address: trade.buyer as `0x${string}`,
+    chainId: mainnet.id,
+    query: {
+      enabled: isBuyerAssigned,
+    },
+  });
+
+  // Display name: ENS if available, otherwise shortened address
+  const displaySellerName = sellerEnsName || formatAddress(trade.seller);
+  const displayBuyerName = buyerEnsName || formatAddress(trade.buyer);
+
   return (
     <Link href={`/trade/${tradeId}`}>
       <div className={`
@@ -140,13 +160,15 @@ export function TradeCard({ tradeId, trade, currentUserAddress }: TradeCardProps
             <div className="text-xs font-medium text-gray-500 dark:text-gray-500 mb-1">
               Seller
             </div>
-            <div className="font-mono text-sm text-gray-900 dark:text-gray-100">
-              {formatAddress(trade.seller)}
+            <div className="text-sm text-gray-900 dark:text-gray-100 truncate" title={sellerEnsName || trade.seller}>
+              {displaySellerName}
             </div>
             {sellerReputation !== undefined && Number(sellerReputation) > 0 && (
               <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
                 {Number(sellerReputation)} trades
                 {Number(sellerReputation) >= 10 && <span className="ml-1">⭐</span>}
+                {Number(sellerReputation) >= 50 && <span className="ml-0.5">⭐</span>}
+                {Number(sellerReputation) >= 100 && <span className="ml-0.5">⭐</span>}
               </div>
             )}
           </div>
@@ -154,8 +176,8 @@ export function TradeCard({ tradeId, trade, currentUserAddress }: TradeCardProps
             <div className="text-xs font-medium text-gray-500 dark:text-gray-500 mb-1">
               Buyer
             </div>
-            <div className={`font-mono text-sm ${isBuyerAssigned ? 'text-gray-900 dark:text-gray-100' : 'text-gray-400 dark:text-gray-600 italic'}`}>
-              {formatAddress(trade.buyer)}
+            <div className={`text-sm truncate ${isBuyerAssigned ? 'text-gray-900 dark:text-gray-100' : 'text-gray-400 dark:text-gray-600 italic'}`} title={buyerEnsName || trade.buyer}>
+              {displayBuyerName}
             </div>
           </div>
         </div>
