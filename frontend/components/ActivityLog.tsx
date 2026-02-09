@@ -72,7 +72,10 @@ export function ActivityLog({ tradeId }: ActivityLogProps) {
             const block = await publicClient.getBlock({ blockNumber: log.blockNumber });
 
             // Determine event type from topics[0] (event signature)
-            const eventInfo = getEventInfo(topics[0]);
+            const topic0 = topics[0];
+            if (!topic0) continue; // Skip if topic is undefined
+            
+            const eventInfo = getEventInfo(topic0);
 
             if (eventInfo) {
               allEvents.push({
