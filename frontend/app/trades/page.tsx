@@ -37,27 +37,28 @@ export default function TradesPage() {
   // const [isLoadingTrades, setIsLoadingTrades] = useState(false);
 
   // Fetch all trades when nextTradeId is available
-  useEffect(() => {
-    const fetchAllTrades = async () => {
-      if (!nextTradeId || nextTradeId === 0n) return;
-      
-      setIsLoadingTrades(true);
-      const tradePromises = [];
-      
-      // Fetch all trades from ID 1 to nextTradeId - 1
-      for (let i = 1n; i < nextTradeId; i++) {
-        tradePromises.push(
-          fetch(`/api/trade/${i}`).catch(() => null) // Using a hypothetical API route
-        );
-      }
-      
-      // For now, we'll fetch them directly using a simple approach
-      // In production, you'd want pagination or an API endpoint
-      setIsLoadingTrades(false);
-    };
+  // TODO: Implement proper trade fetching with pagination or API endpoints
+  // useEffect(() => {
+  //   const fetchAllTrades = async () => {
+  //     if (!nextTradeId || nextTradeId === 0n) return;
+  //     
+  //     setIsLoadingTrades(true);
+  //     const tradePromises = [];
+  //     
+  //     // Fetch all trades from ID 1 to nextTradeId - 1
+  //     for (let i = 1n; i < nextTradeId; i++) {
+  //       tradePromises.push(
+  //         fetch(`/api/trade/${i}`).catch(() => null) // Using a hypothetical API route
+  //       );
+  //     }
+  //     
+  //     // For now, we'll fetch them directly using a simple approach
+  //     // In production, you'd want pagination or an API endpoint
+  //     setIsLoadingTrades(false);
+  //   };
 
-    fetchAllTrades();
-  }, [nextTradeId]);
+  //   fetchAllTrades();
+  // }, [nextTradeId]);
 
   // Calculate filtered trades count
   const totalTrades = nextTradeId ? Number(nextTradeId) - 1 : 0;
